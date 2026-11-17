@@ -340,7 +340,7 @@ class EditorViewModel(app: Application) : AndroidViewModel(app) {
             for (pn in Registry.get(p.type).pins) out += "  ${pn.name}: ${"%.1f".format(s.voltage("${p.id}:${pn.name}"))} V"
             s.warnings[p.id]?.let { out += "⚠ $it" }
             when (val c = circuit?.component(p.id)) {
-                is com.indsim.engine.components.CoilLike -> out += t("بوبین: ", "Coil: ") + (if (c.energized) t("تحریک", "energized") else t("آزاد", "released"))
+                is com.indsim.engine.CoilLike -> out += t("بوبین: ", "Coil: ") + (if (c.energized) t("تحریک", "energized") else t("آزاد", "released"))
                 is Motor3Ph -> out += t("دور نسبی ", "Speed ") + "${"%.2f".format(c.omega)}  " + (if (c.omega > 0.05) "↻" else if (c.omega < -0.05) "↺" else "")
                 else -> {}
             }
