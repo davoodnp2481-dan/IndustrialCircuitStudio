@@ -1,0 +1,25 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.14.3
+      - name: Engine tests
+        run: gradle :engine:engineTests --no-daemon
+      - name: Canvas tests
+        run: gradle :canvas:canvasTests --no-daemon
+      - name: Editor tests (presets, wiring, JSON, storage)
+        run: gradle :editor:editorTests --no-daemon
